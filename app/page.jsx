@@ -29,10 +29,10 @@ const INFO = {
 };
 
 const HOURS = [
-  { days: "Tuesday – Thursday", time: "4:00PM – 12:00AM" },
-  { days: "Friday – Saturday", time: "4:00PM – 2:00AM" },
-  { days: "Sunday", time: "4:00PM – 10:00PM" },
-  { days: "Monday", time: "Closed", closed: true },
+  { days: "Wednesday – Thursday", time: "4:00PM – 12:00AM" },
+  { days: "Friday – Saturday", time: "4:00PM – 1:00AM" },
+  { days: "Sunday", time: "9:00AM – 9:00PM" },
+  { days: "Monday – Tuesday", time: "Closed", closed: true },
 ];
 
 const PILLARS = [
