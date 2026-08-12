@@ -299,7 +299,6 @@ export default function PublicSociety() {
               An elevated lounge for every occasion. Whether it’s a night out
               with friends, a celebration, or just because—you belong here.
             </p>
-            <a href="#visit" className="ps-btn ps-btn--outline">About Us</a>
           </div>
 
           <Photo
