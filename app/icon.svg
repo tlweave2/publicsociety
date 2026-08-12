@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" fill="#14110E"/>
-  <g transform="rotate(-6.5 32 32)">
-    <rect x="9" y="17" width="46" height="30" fill="none" stroke="#C6402B" stroke-width="4"/>
-    <text x="32" y="41"
-          font-family="Courier New, monospace" font-size="21" font-weight="700"
-          letter-spacing="1" text-anchor="middle" fill="#C6402B">PS</text>
-  </g>
+  <rect width="64" height="64" fill="#080808"/>
+  <text x="27" y="42"
+        font-family="Georgia, 'Times New Roman', serif" font-size="34"
+        text-anchor="middle" fill="#C6A15B">P</text>
+  <text x="40" y="47"
+        font-family="Georgia, 'Times New Roman', serif" font-size="34"
+        text-anchor="middle" fill="#C6A15B">S</text>
 </svg>

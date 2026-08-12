@@ -15,6 +15,10 @@ const basePath = process.env.BASE_PATH ?? "/publicsociety";
 const nextConfig = {
   output: "export",
   basePath,
+  // basePath rewrites framework-generated URLs, but NOT plain <img src="/...">
+  // or <video src="/...">. Exposing it lets the page prefix its own asset URLs
+  // so photos and video resolve under /publicsociety.
+  env: { NEXT_PUBLIC_BASE_PATH: basePath },
   // Emit `about/index.html` rather than `about.html`, which is what a static
   // host needs to resolve a directory URL. Harmless for the single route today.
   trailingSlash: true,

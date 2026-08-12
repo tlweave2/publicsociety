@@ -1,18 +1,22 @@
 import "./globals.css";
 
+const title = "Public Society Bar & Lounge — Ceres, California";
+const description =
+  "Ceres' premier cocktail lounge. Craft cocktails, live music, DJ sets and VIP tables. 805 4th Street, Ceres, CA.";
+
 export const metadata = {
-  title: "Public Society — A private club. Everyone's a member.",
-  description:
-    "Two rooms, one long bar, and a patio that stays open later than it probably should. Cocktails, beer, wine and zero proof. Open to the public.",
+  title,
+  description,
   openGraph: {
-    title: "Public Society",
-    description: "A private club. Everyone's a member.",
+    title: "Public Society Bar & Lounge",
+    description: "Cocktails. Music. Late Nights. — Ceres, California",
     type: "website",
+    locale: "en_US",
   },
 };
 
 export const viewport = {
-  themeColor: "#14110E",
+  themeColor: "#080808",
 };
 
 export default function RootLayout({ children }) {

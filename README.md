@@ -1,8 +1,6 @@
-# Public Society
+# Public Society Bar & Lounge
 
-Landing page for Public Society — a bar site built as a club charter: a
-membership stamp in the hero, scrolling bylaws, and each section numbered as an
-Article.
+Website for Public Society Bar & Lounge — 805 4th Street, Ceres, California.
 
 Next.js (App Router) + React, exported as a static site and hosted on GitHub
 Pages. No CSS framework — the page ships its own styles.
@@ -23,6 +21,45 @@ npm run build    # static export into out/
 npm run preview  # serve out/ exactly as Pages does
 ```
 
+## Editing the content
+
+Everything you'll want to change lives in the consts at the top of
+`app/page.jsx`:
+
+| Const | What it controls |
+| --- | --- |
+| `INFO` | Address, phone, socials, and the four external links below |
+| `HOURS` | The hours list in the footer |
+| `PILLARS` | The three cards: Craft Cocktails / The Experience / Events & Nightlife |
+| `MEDIA` | Paths to the hero video, hero poster, storefront and VIP photos |
+
+### The four links that still need real URLs
+
+Each one is an empty string today, and each degrades to something sensible
+rather than a dead button:
+
+| `INFO` key | What to put there | While it's empty |
+| --- | --- | --- |
+| `reservations` | Resy / Tock / OpenTable booking URL | Every "Reserve a Table" and "Book a VIP Table" button dials the phone number instead |
+| `careersForm` | The Google Form for job applications | Careers shows "positions posted soon" plus phone and Instagram |
+| `newsletter` | Mailing-list form action (Mailchimp etc.) | The footer signup becomes a "Follow @publicsocietylounge" link |
+| `facebook` | The real Facebook page URL | Currently points at facebook.com generally |
+
+Filling one in is a one-line change; nothing else needs touching.
+
+## Photos and the walkthrough video
+
+Drop files into `public/images/` and `public/video/` using the names in
+[`public/images/README.md`](public/images/README.md). Until a file exists the
+page shows a styled placeholder panel rather than a broken image, so the site
+stays presentable while photography is in progress.
+
+The hero is built for the walkthrough video: `public/video/walkthrough.mp4`,
+autoplaying muted on a loop behind a dark scrim, with `interior.jpg` as both
+the poster frame and the standalone fallback until the video is ready. That
+file has the encoding requirements — the important ones are silent, H.264,
+seamless loop, and under about 8MB.
+
 ## Deployment
 
 Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds the
@@ -39,11 +76,14 @@ A few things are load-bearing for Pages specifically:
   served from a subdirectory rather than the domain root. Without it every
   asset 404s. This is why the dev server also runs under `/publicsociety`:
   local and production paths stay identical.
+- **`env.NEXT_PUBLIC_BASE_PATH`** — `basePath` rewrites framework URLs but
+  *not* plain `<img src="/...">` or `<video src="/...">`. The page prefixes its
+  own media URLs with this, via the `asset()` helper. Any new image or video
+  must go through `asset()` or it will 404 in production while working locally.
 - **`public/.nojekyll`** — Pages otherwise runs Jekyll, which strips
   directories beginning with an underscore, and Next puts every asset in
   `_next/`.
-- **`images.unoptimized`** — Next's image optimizer needs a server. Only
-  matters if the photo frames switch to `next/image`.
+- **`images.unoptimized`** — Next's image optimizer needs a server.
 
 ### Moving to a custom domain
 
@@ -57,44 +97,21 @@ Set `BASE_PATH` to an empty string in the workflow's build step, add a
 `public/CNAME` file containing the domain, and set the domain in Settings →
 Pages.
 
-## Editing the content
-
-Almost everything you'll want to change lives in the consts at the top of
-`app/page.jsx`:
-
-| Const | What it controls |
-| --- | --- |
-| `INFO` | Address, phone, Instagram, reservations link, newsletter link |
-| `HOURS` | Opening hours — rendered in **both** the hero strip and Article III |
-| `BYLAWS` | The scrolling marquee under the hero |
-| `POURS` | The three drink columns in Article II |
-
-`INFO.reservations` and `INFO.newsletter` are `"#"` placeholders. Point them at
-the real Resy / Tock / OpenTable and Mailchimp URLs. The address and phone are
-placeholders too.
-
-`HOURS` is deliberately a single source of truth — edit it once and both places
-update.
-
-## Adding photos
-
-Article I renders four `<Frame>` components that currently show numbered empty
-slots. Drop images into `public/` and pass a `src`:
-
-```jsx
-<Frame src="/bar.jpg" alt="The long bar" caption="The long bar" tilt={-3} tall />
-```
-
-`tilt` is the rotation in degrees (frames straighten on hover) and `tall`
-switches the frame from 4:3 to 3:4.
-
 ## Notes
 
 - `app/page.jsx` is a client component — it uses `useState`/`useEffect` for the
-  stamp animation, the mobile nav, and the scroll reveals.
-- The member number and stamp date are generated in an effect rather than
-  during render, so server and client markup match (no hydration mismatch).
-- Fonts (Bodoni Moda, Archivo, Courier Prime) load from Google Fonts via an
-  `@import` in the stylesheet.
-- Motion is fully disabled under `prefers-reduced-motion`.
+  mobile nav, the scroll reveals, and the hero video.
+- Visitors with "reduce motion" enabled never download the hero video; they get
+  the poster still. Scroll reveals are disabled for them too.
+- Anchor targets carry `scroll-margin-top` so the fixed nav doesn't cover a
+  section heading when a nav link is clicked.
+- Fonts (Cormorant Garamond, Jost) load from Google Fonts via an `@import`.
 - There is no `next lint` script: that command was removed in Next 16.
+
+## Not built yet
+
+The design mockup's nav lists **Events**, **Private Events** and
+**Reservations** as their own pages. Those aren't here — the mockup didn't
+include copy for them, and that's the owners' to write. The current nav links
+only to sections that exist. When the copy lands, they can become either new
+sections or separate routes under `app/`.
