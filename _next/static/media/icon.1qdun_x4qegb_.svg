@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="#080808"/>
+  <text x="27" y="42"
+        font-family="Georgia, 'Times New Roman', serif" font-size="34"
+        text-anchor="middle" fill="#C6A15B">P</text>
+  <text x="40" y="47"
+        font-family="Georgia, 'Times New Roman', serif" font-size="34"
+        text-anchor="middle" fill="#C6A15B">S</text>
+</svg>

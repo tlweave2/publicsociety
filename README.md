@@ -17,8 +17,9 @@ npm run dev      # http://localhost:3000/publicsociety
 The `/publicsociety` suffix is not a typo — see *Deployment* below.
 
 ```bash
-npm run build    # static export into out/
-npm run preview  # serve out/ exactly as Pages does
+npm run build      # static export into out/
+npm run preview    # serve out/ exactly as Pages does
+npm run build:site # build AND copy the export to the repo root — see Deployment
 ```
 
 ## Editing the content
@@ -64,11 +65,31 @@ about 8MB.
 
 ## Deployment
 
-Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds the
-export and publishes it. No manual step.
+Pages is configured as **Deploy from a branch → main → / (root)**. That mode
+serves the branch's files exactly as they are — it does not run a build. A Next
+project has no `index.html` in source; it only exists after a build. So **the
+built site is committed at the repo root** and that is what gets served.
 
-**One-time setup:** in the repo's Settings → Pages, set *Source* to
-**GitHub Actions**. The workflow cannot deploy until that is switched over.
+### After changing anything
+
+```bash
+npm run build:site
+git add -A && git commit -m "..." && git push
+```
+
+`build:site` runs the build and copies `out/` to the repo root, replacing the
+previous copy. Committing source without running it leaves the live site on the
+old build — the "Build check" workflow fails loudly when that happens.
+
+The root `.nojekyll` is essential: without it Pages runs Jekyll over the root,
+which strips underscore-prefixed directories, and Next puts every asset in
+`_next/`. The result is an unstyled page.
+
+### The cleaner alternative
+
+Switching Settings → Pages → *Source* to **GitHub Actions** removes all of the
+above: no build output in git, no extra command before committing. The workflow
+comments explain the three steps to swap back to it.
 
 A few things are load-bearing for Pages specifically:
 

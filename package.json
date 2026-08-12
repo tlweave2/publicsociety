@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "preview": "node scripts/preview.mjs"
+    "preview": "node scripts/preview.mjs",
+    "build:site": "next build && node scripts/publish-to-root.mjs"
   },
   "dependencies": {
     "next": "^16.3.0",
