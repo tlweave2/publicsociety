@@ -41,7 +41,7 @@ rather than a dead button:
 | `INFO` key | What to put there | While it's empty |
 | --- | --- | --- |
 | `reservations` | Resy / Tock / OpenTable booking URL | Every "Reserve a Table" and "Book a VIP Table" button dials the phone number instead |
-| `careersForm` | The Google Form for job applications | Careers shows "positions posted soon" plus phone and Instagram |
+| `careersForm` | The Google Form for job applications — **currently a placeholder** pointing at Google Forms generally, so swap it before promoting the site | Set it to `""` and Careers shows "positions posted soon" plus phone and Instagram instead |
 | `newsletter` | Mailing-list form action (Mailchimp etc.) | The footer signup becomes a "Follow @publicsocietylounge" link |
 | `facebook` | The real Facebook page URL | Currently points at facebook.com generally |
 

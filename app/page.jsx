@@ -18,9 +18,11 @@ const INFO = {
   // Resy / Tock / OpenTable link. Until it's set, reservation buttons fall
   // back to the phone number rather than going nowhere.
   reservations: "",
-  // Google Form for employment applications. Empty = the Careers section
-  // shows a "positions posted soon" state instead of a dead button.
-  careersForm: "",
+  // PLACEHOLDER — replace with the real Google Form URL (looks like
+  // https://forms.gle/xxxx or https://docs.google.com/forms/d/e/xxxx/viewform).
+  // This currently lands on Google Forms generally, not an application.
+  // Setting this back to "" reverts Careers to a "positions posted soon" state.
+  careersForm: "https://docs.google.com/forms/",
   // Mailing-list endpoint (Mailchimp form action, etc.). Empty = the footer
   // signup is replaced by an Instagram follow prompt.
   newsletter: "",
