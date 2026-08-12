@@ -12,9 +12,16 @@ page shows a styled placeholder panel rather than a broken image.
 | `storefront.jpg` | "Ceres' Premier Cocktail Lounge" section | 1600×1100 |
 | `vip-table.jpg` | "VIP Tables" section | 1600×1000 |
 
-From the photos already shot: the chandelier/dance-floor interior is
-`interior.jpg`, the 4th Street exterior is `storefront.jpg`, and the reserved
-table with candles is `vip-table.jpg`.
+Mapping from the photos shot so far:
+
+- Chandelier / dance-floor interior → `interior.jpg`
+- 4th Street exterior → `storefront.jpg`
+- Patrón bottle on the bar → `vip-table.jpg`. The VIP copy is "bottle service,
+  private seating", so a bottle shot reads correctly here. Swap in a photo of a
+  set reserved table if one gets taken.
+
+The Jack Daniel's pour has no slot on the page yet. It would suit a Craft
+Cocktails feature or an About image if either section grows.
 
 Export as JPEG, quality ~80. The hero image is the largest thing on the page —
 keep it under about 400KB or it will slow the first load noticeably.
