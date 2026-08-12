@@ -50,15 +50,17 @@ Filling one in is a one-line change; nothing else needs touching.
 ## Photos and the walkthrough video
 
 Drop files into `public/images/` and `public/video/` using the names in
-[`public/images/README.md`](public/images/README.md). Until a file exists the
-page shows a styled placeholder panel rather than a broken image, so the site
-stays presentable while photography is in progress.
+[`docs/media.md`](docs/media.md). Until a file exists the page shows a styled
+placeholder panel rather than a broken image, so the site stays presentable
+while photography is in progress.
 
-The hero is built for the walkthrough video: `public/video/walkthrough.mp4`,
-autoplaying muted on a loop behind a dark scrim, with `interior.jpg` as both
-the poster frame and the standalone fallback until the video is ready. That
-file has the encoding requirements — the important ones are silent, H.264,
-seamless loop, and under about 8MB.
+**The hero is a still image** (`interior.jpg`) behind a dark scrim. When the
+walkthrough video is ready, drop it at `public/video/walkthrough.mp4` and set
+`MEDIA.heroVideo` to `"/video/walkthrough.mp4"` — the hero then autoplays it
+muted on a loop, with `interior.jpg` as its poster frame. While `heroVideo` is
+an empty string no video is requested at all. `docs/media.md` has the encoding
+requirements; the ones that matter are silent, H.264, seamless loop, and under
+about 8MB.
 
 ## Deployment
 

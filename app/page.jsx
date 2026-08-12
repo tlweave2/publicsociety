@@ -51,10 +51,13 @@ const PILLARS = [
   },
 ];
 
-/* Media lives in public/. See public/images/README.md for the file list. */
+/* Media lives in public/. See docs/media.md for the file list and specs. */
 const MEDIA = {
-  heroVideo: "/video/walkthrough.mp4",
-  heroPoster: "/images/interior.jpg",
+  // The hero is a still image until this is set. When the walkthrough video is
+  // ready, drop it at public/video/walkthrough.mp4 and set this to
+  // "/video/walkthrough.mp4" — heroImage then becomes its poster frame.
+  heroVideo: "",
+  heroImage: "/images/interior.jpg",
   storefront: "/images/storefront.jpg",
   vip: "/images/vip-table.jpg",
 };
@@ -248,22 +251,27 @@ export default function PublicSociety() {
         {/* ── Hero ────────────────────────────────────────── */}
         <section className="ps-hero">
           <div className="ps-hero-media">
-            {videoOk ? (
+            {MEDIA.heroVideo && videoOk ? (
               <video
-                className="ps-hero-video"
+                className="ps-hero-media-el"
                 autoPlay
                 muted
                 loop
                 playsInline
-                poster={asset(MEDIA.heroPoster)}
+                poster={asset(MEDIA.heroImage)}
                 onError={() => setVideoOk(false)}
               >
                 <source src={asset(MEDIA.heroVideo)} type="video/mp4" />
               </video>
             ) : (
-              // Walkthrough video not in place yet — the poster still carries
-              // the hero on its own.
-              <img className="ps-hero-video" src={asset(MEDIA.heroPoster)} alt="" />
+              // No video configured (or it failed): the still carries the hero.
+              // Eager + high priority — this is the largest paint on the page.
+              <img
+                className="ps-hero-media-el"
+                src={asset(MEDIA.heroImage)}
+                alt=""
+                fetchPriority="high"
+              />
             )}
             <div className="ps-hero-scrim" />
           </div>
@@ -584,14 +592,14 @@ const CSS = `
 }
 .ps-hero-media {
   position: absolute; inset: 0; overflow: hidden;
-  /* Shows through until interior.jpg / walkthrough.mp4 are added, so the
-     hero reads as lamplight rather than an empty black box. */
+  /* Shows through until interior.jpg is added, so the hero reads as
+     lamplight rather than an empty black box. */
   background:
     radial-gradient(120% 90% at 72% 38%, rgba(198,161,91,.16), transparent 58%),
     radial-gradient(80% 60% at 20% 90%, rgba(140,111,62,.1), transparent 60%),
     var(--black);
 }
-.ps-hero-video {
+.ps-hero-media-el {
   width: 100%; height: 100%; object-fit: cover; display: block;
 }
 .ps-hero-scrim {
