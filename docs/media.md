@@ -1,50 +1,75 @@
-# Media drop-in
+# Media
 
-The site references these paths. Drop the files in with these exact names and
-they appear automatically — no code change needed. Until a file exists, the
-page shows a styled placeholder panel rather than a broken image.
+## What the site uses
 
-## Images — `public/images/`
+These three files are what the page references. They are optimized derivatives
+— re-encoded and resized from the originals — not the camera files.
 
-| File | Used for | Suggested size |
-| --- | --- | --- |
-| `interior.jpg` | Hero background (and the video's poster frame) | 2400×1350, landscape |
-| `storefront.jpg` | "Ceres' Premier Cocktail Lounge" section | 1600×1100 |
-| `vip-table.jpg` | "VIP Tables" section | 1600×1000 |
+| File | Used for | Dimensions | Size |
+| --- | --- | --- | --- |
+| `public/images/interior.jpg` | Hero background (and the video's poster frame) | 1535×1024 | 249KB |
+| `public/images/storefront.jpg` | "Ceres' Premier Cocktail Lounge" section | 1320×735 | 135KB |
+| `public/images/bottle-service.jpg` | "VIP Tables" section | 1000×1500 | 221KB |
 
-Mapping from the photos shot so far:
+Paths are set in `MEDIA` at the top of `app/page.jsx`.
 
-- Chandelier / dance-floor interior → `interior.jpg`
-- 4th Street exterior → `storefront.jpg`
-- Patrón bottle on the bar → `vip-table.jpg`. The VIP copy is "bottle service,
-  private seating", so a bottle shot reads correctly here. Swap in a photo of a
-  set reserved table if one gets taken.
+## Originals
 
-The Jack Daniel's pour has no slot on the page yet. It would suit a Craft
-Cocktails feature or an About image if either section grows.
+`assets-source/` holds the uploaded originals, including shots not currently
+used on the page:
 
-Export as JPEG, quality ~80. The hero image is the largest thing on the page —
-keep it under about 400KB or it will slow the first load noticeably.
-
-## Video — `public/video/`
-
-| File | Used for |
+| Original | Became |
 | --- | --- |
-| `walkthrough.mp4` | Hero background video |
+| `8F02EAE9-9393-4ACA-A381-0634D392CFD7.PNG` | `interior.jpg` |
+| `IMG_8539.jpg` | `storefront.jpg` |
+| `publicsociety-662.jpg` | `bottle-service.jpg` |
+| `publicsociety-661.jpg` | *unused* |
+| `publicsociety-663.jpg` | *unused* |
+| `ChatGPT Image Aug 11, 2026, 09_56_56 PM.png` | *unused (design comp)* |
 
-For the walkthrough video:
+That folder sits outside `public/` deliberately: everything under `public/` is
+copied into the export and published, so keeping 3.3MB of originals there would
+ship them to every visitor for no reason.
 
-- **H.264 MP4.** Widest support, and the only format the page requests.
+## Adding or replacing a photo
+
+1. Put the original in `assets-source/`.
+2. Generate an optimized version into `public/images/`. Roughly:
+
+   ```js
+   sharp(input)
+     .rotate()                                   // honour EXIF orientation
+     .resize({ width: 1600, withoutEnlargement: true })
+     .jpeg({ quality: 82, mozjpeg: true, progressive: true })
+     .toFile(output);
+   ```
+
+   Keep hero-sized images under about 300KB. The originals were 1.9MB and
+   1.1MB; re-encoding cut them by 87% and 80% with no visible difference at
+   display size.
+3. Point the matching key in `MEDIA` at the new file.
+
+New images must go through the `asset()` helper (they do automatically if you
+use `MEDIA`), or they will 404 in production — `basePath` does not rewrite
+plain `src` attributes.
+
+Portrait images need a width cap or they tower over the copy beside them; see
+`.ps-vip .ps-photo` for how the bottle shot is handled.
+
+## Walkthrough video — `public/video/walkthrough.mp4`
+
+Not added yet. The hero is currently the still image. When the video is ready,
+drop it at that path and set `MEDIA.heroVideo` to `"/video/walkthrough.mp4"`;
+`interior.jpg` automatically becomes its poster frame. While `heroVideo` is an
+empty string, no video is requested at all.
+
+Requirements:
+
+- **H.264 MP4.** The only format the page requests.
 - **Silent.** It is muted and cannot be unmuted — browsers block autoplay with
   sound. Strip the audio track entirely to save weight.
 - **20–40 seconds, seamless loop.** It repeats indefinitely.
 - **Under ~8MB.** It loads on every visit, including phones on cell data.
-  1080p at a moderate bitrate is plenty behind a dark scrim.
-- **No text or faces in the lower left** — the headline sits there.
+- **No key detail in the lower left** — the headline sits there.
 
-Until `walkthrough.mp4` exists, the hero uses `interior.jpg` as a still. The
-same still is the poster frame once the video lands, so it is worth choosing a
-frame that matches the video's opening shot.
-
-Visitors with "reduce motion" enabled in their OS never load the video and see
-the still instead.
+Visitors with "reduce motion" enabled never load the video and see the still.

@@ -59,7 +59,7 @@ const MEDIA = {
   heroVideo: "",
   heroImage: "/images/interior.jpg",
   storefront: "/images/storefront.jpg",
-  vip: "/images/vip-table.jpg",
+  vip: "/images/bottle-service.jpg",
 };
 
 // basePath does not rewrite plain src attributes, so asset URLs are prefixed
@@ -323,8 +323,8 @@ export default function PublicSociety() {
         <section className="ps-section ps-vip" id="vip">
           <Photo
             src={MEDIA.vip}
-            alt="A reserved VIP table set with candles and lamplight"
-            label="VIP Table"
+            alt="A bottle of Patrón El Alto tequila on the bar at Public Society"
+            label="Bottle Service"
             className="ps-reveal ps-photo--framed"
           />
 
@@ -704,6 +704,9 @@ const CSS = `
   gap: clamp(32px, 6vw, 80px); align-items: center;
 }
 .ps-vip-copy p { max-width: 38ch; }
+/* The bottle shot is portrait (2:3). Unconstrained it would tower over the
+   copy beside it, so cap the width and centre it in its column. */
+.ps-vip .ps-photo { max-width: 400px; margin-inline: auto; width: 100%; }
 
 /* ── Careers ─────────────────────────────────────────── */
 .ps-careers { text-align: center; }
