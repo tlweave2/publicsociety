@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "preview": "node scripts/preview.mjs"
   },
   "dependencies": {
     "next": "^16.3.0",

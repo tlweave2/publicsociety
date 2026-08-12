@@ -15,3 +15,6 @@ yarn-error.log*
 *.pem
 .vercel
 next-env.d.ts
+
+# static export output
+out/
